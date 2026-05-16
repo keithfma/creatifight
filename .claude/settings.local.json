@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/usr/libexec/java_home -V)",
+      "Bash(brew --version)",
+      "Bash(unzip *)",
+      "Bash(find ~/*)",
+      "Bash(find /Users/personal/*)",
+      "Bash(ls ~/*)",
+      "Bash(ls -la ~/*)",
+      "Bash(cat ~/*)",
+      "Bash(grep ~/*)",
+      "Bash(head ~/*)",
+      "Bash(tail ~/*)"
+    ]
+  }
+}
