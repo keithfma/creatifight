@@ -1,0 +1,78 @@
+name: Release
+
+# Triggers on every push to main (including PR merges).
+# If `mod_version` in gradle.properties hasn't been tagged yet, builds and publishes.
+# Otherwise no-ops.
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write    # needed to create the GitHub Release + tag
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Read mod_version from gradle.properties
+        id: version
+        run: |
+          VERSION=$(grep '^mod_version=' gradle.properties | cut -d= -f2)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check whether v$VERSION has already been published
+        id: check
+        run: |
+          if git tag -l "v${{ steps.version.outputs.version }}" | grep -q .; then
+            echo "Tag v${{ steps.version.outputs.version }} already exists — skipping."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Tag v${{ steps.version.outputs.version }} not found — proceeding to publish."
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup JDK 21
+        if: steps.check.outputs.exists == 'false'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        if: steps.check.outputs.exists == 'false'
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build with Gradle
+        if: steps.check.outputs.exists == 'false'
+        run: ./gradlew build
+
+      - name: Publish
+        if: steps.check.outputs.exists == 'false'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          # GitHub Release (creates the v$VERSION tag pointing at this commit).
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-tag: v${{ steps.version.outputs.version }}
+          github-generate-changelog: true
+
+          # Modrinth — skipped if MODRINTH_PROJECT_ID or MODRINTH_TOKEN is missing.
+          modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          # CurseForge — skipped if CURSEFORGE_PROJECT_ID or CURSEFORGE_TOKEN is missing.
+          curseforge-id: ${{ vars.CURSEFORGE_PROJECT_ID }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          # Shared metadata
+          files: build/libs/!(*-@(dev|sources|javadoc)).jar
+          name: Creatifight ${{ steps.version.outputs.version }}
+          version: ${{ steps.version.outputs.version }}
+          version-type: release
+          loaders: neoforge
+          game-versions: 1.21.1
