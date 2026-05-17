@@ -1,16 +1,18 @@
 # Creatifight
 
+<img src="icon.png" alt="Creatifight logo" width="120" align="left" hspace="20">
+
 A Minecraft mod that adds a new gamemode for players who want the thrill of building and fighting without worrying
 about damage and dying. The *creatifight* mode combines the freedom of creative mode (unlimited resources, flight,
 and invulnerability) with the excitement of survival mode (aggressive mobs to battle).
 
-My inspiration for making this mod was playing Minecraft with my son. Creative mode was wonderful, but enemies were
+My inspiration for making this mod was playing Minecraft with family. Creative mode was wonderful, but enemies were
 just plain boring to fight. Survival mode was exciting, but too hard and stressful. I was left wishing for a middle
 ground between the two, where we could have a "safe" adventure playing together.
 
-Enjoy with friends!
+Enjoy, friends!
 
-Compatible with: Java Edition, NeoForge 1.21.1)
+Compatible with: Java Edition, NeoForge 1.21.1
 
 ## Use
 
