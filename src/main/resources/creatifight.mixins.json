@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.creatifight.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MeleeAttackGoalMixin",
+    "PhantomSweepAttackGoalMixin",
+    "ServerPlayerMixin",
+    "EnderDragonMixin",
+    "WardenMixin"
+  ]
+}
