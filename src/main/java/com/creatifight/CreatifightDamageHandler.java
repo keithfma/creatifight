@@ -6,6 +6,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
+/** Zeroes incoming damage for Creatifight players via {@code setAmount(0)}, leaving every vanilla visual/audio effect intact; {@code BYPASSES_INVULNERABILITY} sources pass through. */
 @EventBusSubscriber(modid = CreatifightMod.MODID)
 public final class CreatifightDamageHandler {
     @SubscribeEvent

@@ -14,6 +14,15 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
+/**
+ * Bypasses {@code isCreative()} filters in {@link MeleeAttackGoal} that would otherwise stop
+ * mobs from attacking Creatifight players (who remain {@code isCreative() == true} under the hood).
+ *
+ * <p>{@code canContinueToUse} (with {@code followingTargetEvenIfNotSeen=true}: spiders, vexes,
+ * ravagers, etc.) explicitly returns false for creative targets — bypassed. {@code stop} calls
+ * {@code NO_CREATIVE_OR_SPECTATOR.test} and clears the target on every goal stop — suppressed
+ * for Creatifight targets so zombies don't cycle.
+ */
 @Mixin(MeleeAttackGoal.class)
 public abstract class MeleeAttackGoalMixin {
     @Shadow @Final protected PathfinderMob mob;

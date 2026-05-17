@@ -7,6 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
+/** Clears the Creatifight flag when the player transitions to any non-CREATIVE gamemode. */
 @EventBusSubscriber(modid = CreatifightMod.MODID)
 public final class GameModeChangeHandler {
     @SubscribeEvent

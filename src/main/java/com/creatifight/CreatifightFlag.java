@@ -8,6 +8,7 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
+/** Per-player Boolean flag indicating Creatifight mode; persists across save/load and respawn. */
 public final class CreatifightFlag {
     private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES =
             DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, CreatifightMod.MODID);
@@ -16,6 +17,7 @@ public final class CreatifightFlag {
             ATTACHMENT_TYPES.register("in_creatifight",
                     () -> AttachmentType.builder(() -> Boolean.FALSE)
                             .serialize(Codec.BOOL)
+                            .copyOnDeath()
                             .build());
 
     public static void register(IEventBus modEventBus) {
