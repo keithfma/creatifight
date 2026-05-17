@@ -46,6 +46,10 @@ In creatifight mode, damage flow works like this:
 
 `BYPASSES_INVULNERABILITY` damage (void, `/kill`) skips step 3 and passes through normally.
 
+### World-default Creatifight
+
+When creating a New World, "Creatifight" appears as a 5th option in the gamemode cycle button alongside Survival / Hardcore / Creative. Worlds created with it set persist a flag (via a NeoForge `Level`-level Attachment) and auto-apply Creatifight to each player on their first join; subsequent gamemode changes are sticky and the mod won't re-apply. Implementation is in `CreatifightWorldDefault` (the attachment), `CreatifightLoginHandler` (auto-apply + handoff consumer), and three client mixins (`SelectedGameModeMixin` extends the vanilla enum; `CreateWorldScreenMixin` + `CreateWorldScreenGameTabMixin` wire the UI).
+
 ### Releasing
 
 To publish a new version: bump `mod_version` in `gradle.properties`, commit, and merge to `main` (or push directly). GitHub Actions detects the new version, builds the jar, creates a GitHub Release at `v<version>`, and publishes to Modrinth + CurseForge.
