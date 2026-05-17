@@ -1,18 +1,18 @@
 # Creatifight
 
+<img src="icon.png" alt="Creatifight logo" width="120" align="left" hspace="20">
+
 A Minecraft mod that adds a new gamemode for players who want the thrill of building and fighting without worrying
 about damage and dying. The *creatifight* mode combines the freedom of creative mode (unlimited resources, flight,
 and invulnerability) with the excitement of survival mode (aggressive mobs to battle).
 
-My inspiration for making this mod was playing Minecraft with my son. Creative mode was wonderful, but enemies were
+My inspiration for making this mod was playing Minecraft with family. Creative mode was wonderful, but enemies were
 just plain boring to fight. Survival mode was exciting, but too hard and stressful. I was left wishing for a middle
 ground between the two, where we could have a "safe" adventure playing together.
 
-Enjoy with friends!
+Enjoy, friends!
 
-Compatible with: Java Edition, NeoForge 1.21.1)
-
-## Use
+Compatible with: Java Edition, NeoForge 1.21.1
 
 | Command                                                       | Effect                                 |
 |---------------------------------------------------------------|----------------------------------------|
@@ -20,7 +20,11 @@ Compatible with: Java Edition, NeoForge 1.21.1)
 | `/gamemode creatifight <player>`                              | Put another player in Creatifight mode |
 | `/gamemode creative` / `survival` / `adventure` / `spectator` | Exit Creatifight to another mode       |
 
-## How it works
+---
+
+## For Developers
+
+### How it works
 
 Creatifight is implemented as a per-player flag on top of CREATIVE gamemode. The player keeps all creative
 perks, but with `abilities.invulnerable = false` enforced by a per-tick check, which
@@ -42,10 +46,24 @@ In creatifight mode, damage flow works like this:
 
 `BYPASSES_INVULNERABILITY` damage (void, `/kill`) skips step 3 and passes through normally.
 
----
+### Releasing
 
-## Appendix: implementation details
+To publish a new version: bump `mod_version` in `gradle.properties`, commit, and merge to `main` (or push directly). GitHub Actions detects the new version, builds the jar, creates a GitHub Release at `v<version>`, and publishes to Modrinth + CurseForge.
 
+If the version in `gradle.properties` matches an existing tag, the workflow no-ops — pushing other changes to `main` doesn't re-publish.
+
+### Verification
+
+Quick smoke test after a code change:
+
+1. `/gamemode creatifight`, summon a zombie, confirm it attacks visibly with no health drop.
+2. `/gamemode creative` → "Exited Creatifight" message, zombie ignores you.
+3. `/gamemode survival` round-trip → exit via standard path.
+4. `/kill` → respawn → still in Creatifight, mobs still attack (verifies `.copyOnDeath()`).
+
+For exotic mobs, `/summon` each and confirm attacks land: `warden`, `wither`, `ender_dragon`, `ravager`, `vex`,
+`iron_golem`, `phantom`. For raids, stand in a real village (workstation POI cluster), `/effect give @s bad_omen 60 1`,
+wait for raid bar.
 ### Rejected design options
 
 - **New `GameType.CREATIFIGHT` enum entry**: NeoForge 1.21.1 doesn't support extending `GameType` cleanly. It doesn't
@@ -78,16 +96,3 @@ are tied to specific bytecode signatures and may break if Mojang refactors the t
   change was requested but the resulting gamemode didn't change."
 
 Each mixin's own class-header comment explains its specific intervention.
-
-### Verification
-
-Quick smoke test after a code change:
-
-1. `/gamemode creatifight`, summon a zombie, confirm it attacks visibly with no health drop.
-2. `/gamemode creative` → "Exited Creatifight" message, zombie ignores you.
-3. `/gamemode survival` round-trip → exit via standard path.
-4. `/kill` → respawn → still in Creatifight, mobs still attack (verifies `.copyOnDeath()`).
-
-For exotic mobs, `/summon` each and confirm attacks land: `warden`, `wither`, `ender_dragon`, `ravager`, `vex`,
-`iron_golem`, `phantom`. For raids, stand in a real village (workstation POI cluster), `/effect give @s bad_omen 60 1`,
-wait for raid bar.
