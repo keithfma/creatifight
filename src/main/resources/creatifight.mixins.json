@@ -9,5 +9,11 @@
     "ServerPlayerMixin",
     "EnderDragonMixin",
     "WardenMixin"
+  ],
+  "client": [
+    "client.SelectedGameModeMixin",
+    "client.CreateWorldScreenMixin",
+    "client.CreateWorldScreenGameTabMixin",
+    "client.WorldCreationUiStateMixin"
   ]
 }
