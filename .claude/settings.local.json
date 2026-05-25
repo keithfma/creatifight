@@ -11,7 +11,11 @@
       "Bash(cat ~/*)",
       "Bash(grep ~/*)",
       "Bash(head ~/*)",
-      "Bash(tail ~/*)"
+      "Bash(tail ~/*)",
+      "Bash(find ~/.gradle/caches -name \"*LivingIncomingDamageEvent*\" -type f 2>/dev/null | head -20)",
+      "Bash(cd /tmp && unzip -q /Users/personal/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.230/8b0dba969a089e3c98f601b0a00e978a65936a6b/neoforge-21.1.230-sources.jar \"net/neoforged/neoforge/common/damagesource/DamageContainer.java\" && cat net/neoforged/neoforge/common/damagesource/DamageContainer.java 2>/dev/null | head -80)",
+      "Bash(cd /tmp && rm -rf net && unzip -q /Users/personal/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.230/8b0dba969a089e3c98f601b0a00e978a65936a6b/neoforge-21.1.230-sources.jar \"net/neoforged/neoforge/common/CommonHooks.java\" -d /tmp && cat /tmp/net/neoforged/neoforge/common/CommonHooks.java | grep -A 20 \"onEntityIncomingDamage\")",
+      "Bash(./gradlew compileJava)"
     ]
   }
 }
