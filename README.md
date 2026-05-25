@@ -12,6 +12,11 @@ ground between the two, where we could have a "safe" adventure playing together.
 
 Enjoy, friends!
 
+Download at: 
+* [Curseforge](https://www.curseforge.com/minecraft/mc-mods/creatifight)
+* [Modrinth](https://modrinth.com/mod/creatifight)
+* [Github](https://github.com/keithfma/creatifight/releases)
+
 Compatible with: Java Edition, NeoForge 1.21.1
 
 | Command                                                       | Effect                                 |
